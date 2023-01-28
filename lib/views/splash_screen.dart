@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mcq_ai/controllers/user_controller.dart';
+import 'package:mcq_ai/views/dashboard_screen.dart';
 import 'package:mcq_ai/views/login_screen.dart';
-import 'package:mcq_ai/widgets/overlay_loader.dart';
 
 import '../utils/constant_manager.dart';
 import '../utils/size_config.dart';
@@ -15,11 +16,19 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final UserController _controller = Get.find();
+
   @override
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 2), () => Get.off(() => LoginScreen()));
+    Timer(const Duration(seconds: 2), () {
+      if (_controller.isLoggedIn()) {
+        Get.off(() => DashboardScreen());
+      } else {
+        Get.off(() => LoginScreen());
+      }
+    });
   }
 
   @override

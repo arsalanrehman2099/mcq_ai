@@ -18,6 +18,10 @@ dependencies:
   get: ^4.6.5
   fluttertoast: ^8.1.1
   camera: ^0.10.0+4
+  firebase_core:
+  firebase_auth:
+  cloud_firestore:
+  loading_overlay:
 
 
 dev_dependencies:

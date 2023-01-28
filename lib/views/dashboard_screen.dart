@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mcq_ai/controllers/user_controller.dart';
+import 'package:mcq_ai/utils/confirmation_dialog.dart';
 import 'package:mcq_ai/utils/constant_manager.dart';
 import 'package:mcq_ai/utils/raw_data.dart';
 import 'package:mcq_ai/utils/size_config.dart';
@@ -9,14 +11,16 @@ import 'package:mcq_ai/views/quiz_action_screen.dart';
 import '../widgets/app_logo.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+  DashboardScreen({Key? key}) : super(key: key);
+
+  final UserController _userController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
 
     return Scaffold(
-      appBar: _appBar(),
+      appBar: _appBar(context),
       floatingActionButton: _fab(),
       body: ListView.separated(
         itemCount: RawData.DATA.length,
@@ -43,7 +47,7 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  AppBar _appBar() {
+  AppBar _appBar(context) {
     return AppBar(
       leading: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -51,7 +55,16 @@ class DashboardScreen extends StatelessWidget {
       ),
       centerTitle: true,
       actions: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert_rounded))
+        IconButton(
+          onPressed: () {
+            MyConfirmationDialog().showConfirmationDialog(context,
+                message: 'Are you sure you want to logout?', onConfirm: () {
+              _userController.userLogout();
+            });
+          },
+          icon: const Icon(Icons.logout),
+          tooltip: 'Logout',
+        )
       ],
       title: Text(
         'Quiz.AI',
