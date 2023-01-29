@@ -4,14 +4,14 @@ import 'package:get/get.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:mcq_ai/controllers/user_controller.dart';
 import 'package:mcq_ai/models/user.dart';
-import 'package:mcq_ai/views/dashboard_screen.dart';
 import 'package:mcq_ai/widgets/app_logo.dart';
 
-import '../utils/constant_manager.dart';
-import '../utils/size_config.dart';
-import '../widgets/my_button.dart';
-import '../widgets/my_text_field.dart';
-import '../widgets/overlay_loader.dart';
+import '../../utils/constant_manager.dart';
+import '../../utils/size_config.dart';
+import '../../widgets/my_button.dart';
+import '../../widgets/my_text_field.dart';
+import '../../widgets/overlay_loader.dart';
+import '../dashboard/dashboard_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   final _name = TextEditingController();

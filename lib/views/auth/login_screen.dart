@@ -3,18 +3,20 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_overlay/loading_overlay.dart';
-import 'package:mcq_ai/views/register_screen.dart';
+import 'package:mcq_ai/views/auth/register_screen.dart';
 import 'package:mcq_ai/widgets/app_logo.dart';
 
-import '../controllers/user_controller.dart';
-import '../models/user.dart';
-import '../utils/constant_manager.dart';
-import '../utils/size_config.dart';
-import '../widgets/icon_text_field.dart';
-import '../widgets/my_button.dart';
-import '../widgets/overlay_loader.dart';
-import '../widgets/wavy_bg.dart';
-import 'dashboard_screen.dart';
+import '../../controllers/user_controller.dart';
+import '../../models/user.dart';
+import '../../utils/constant_manager.dart';
+import '../../utils/size_config.dart';
+import '../../widgets/icon_text_field.dart';
+import '../../widgets/my_button.dart';
+import '../../widgets/overlay_loader.dart';
+import '../../widgets/wavy_bg.dart';
+import '../dashboard/dashboard_screen.dart';
+
+
 
 class LoginScreen extends StatelessWidget {
   final _email = TextEditingController();

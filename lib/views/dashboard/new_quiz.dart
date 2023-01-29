@@ -1,36 +1,47 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mcq_ai/utils/raw_data.dart';
+import 'package:mcq_ai/controllers/user_controller.dart';
+import 'package:mcq_ai/models/quiz.dart';
 import 'package:mcq_ai/utils/size_config.dart';
-import 'package:mcq_ai/views/new_quiz_question.dart';
 import 'package:mcq_ai/widgets/my_elevated_button.dart';
 import 'package:mcq_ai/widgets/my_text_field.dart';
 
-import '../utils/constant_manager.dart';
-import '../widgets/app_logo.dart';
+import '../../utils/constant_manager.dart';
+import 'new_quiz_questions.dart';
 
-class EditQuizScreen extends StatefulWidget {
-
-  final int index;
-  EditQuizScreen({Key? key, required this.index}) : super(key: key);
+class NewQuizScreen extends StatefulWidget {
+  NewQuizScreen({Key? key}) : super(key: key);
 
   @override
-  State<EditQuizScreen> createState() => _EditQuizScreenState();
+  State<NewQuizScreen> createState() => _NewQuizScreenState();
 }
 
-class _EditQuizScreenState extends State<EditQuizScreen> {
+class _NewQuizScreenState extends State<NewQuizScreen> {
   final _title = TextEditingController();
   final _subtitle = TextEditingController();
   final _date = TextEditingController();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  final UserController _userController = Get.find();
 
-    _title.text = RawData.DATA[widget.index]['title'].toString();
-    _subtitle.text = RawData.DATA[widget.index]['subtitle'].toString();
-    _date.text = RawData.DATA[widget.index]['date'].toString();
+  _submit() {
+    if (_title.text == "") {
+      ConstantManager.showtoast('Title is required');
+    } else if (_subtitle.text == "") {
+      ConstantManager.showtoast('Subtitle is required');
+    } else if (_date.text == "") {
+      ConstantManager.showtoast('Date is required');
+    } else {
+      Quiz quiz = Quiz(
+        id: ConstantManager.generateRandomString(25),
+        userId: _userController.myId(),
+        title: _title.text.trim(),
+        subtitle: _subtitle.text.trim(),
+        date: _date.text.trim(),
+        createdAt: Timestamp.now(),
+      );
+      Get.to(() => NewQuizQuestion(quiz: quiz));
+    }
   }
 
   @override
@@ -38,12 +49,11 @@ class _EditQuizScreenState extends State<EditQuizScreen> {
     SizeConfig().init(context);
 
     return Scaffold(
-      appBar: ConstantManager.appBar('Edit Quiz'),
+      appBar: ConstantManager.appBar('New Quiz'),
       body: _quizForm(),
     );
   }
 
- 
   Widget _quizForm() {
     return SingleChildScrollView(
       child: Container(
@@ -76,14 +86,32 @@ class _EditQuizScreenState extends State<EditQuizScreen> {
             GestureDetector(
               onTap: () {
                 showDatePicker(
+                  builder: (context, child) {
+                    return Theme(
+                      data: Theme.of(context).copyWith(
+                        colorScheme: const ColorScheme.light(
+                          primary: ConstantManager
+                              .PRIMARY_COLOR, // header background color
+                        ),
+                        textButtonTheme: TextButtonThemeData(
+                          style: TextButton.styleFrom(
+                            textStyle: ConstantManager.ktextStyle.copyWith(
+                              color: ConstantManager.PRIMARY_COLOR,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      child: child!,
+                    );
+                  },
                   context: context,
                   initialDate: DateTime.now(),
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2122),
                 ).then((value) {
                   if (value != null) {
-                    var date =
-                        '${value.day} - ${value.month} - ${value.year}';
+                    var date = '${value.day} - ${value.month} - ${value.year}';
                     _date.text = date;
                   }
                 });
@@ -97,7 +125,7 @@ class _EditQuizScreenState extends State<EditQuizScreen> {
             SizedBox(height: SizeConfig.blockSizeVertical! * 3.0),
             MyElevatedButton(
               text: 'Next',
-              onClick: () => Get.to(() => NewQuizQuestion()),
+              onClick: _submit,
             ),
           ],
         ),

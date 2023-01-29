@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mcq_ai/controllers/user_controller.dart';
-import 'package:mcq_ai/views/dashboard_screen.dart';
-import 'package:mcq_ai/views/login_screen.dart';
 
-import '../utils/constant_manager.dart';
-import '../utils/size_config.dart';
-import '../widgets/app_logo.dart';
+import '../../utils/constant_manager.dart';
+import '../../utils/size_config.dart';
+import '../../widgets/app_logo.dart';
+import '../dashboard/dashboard_screen.dart';
+import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

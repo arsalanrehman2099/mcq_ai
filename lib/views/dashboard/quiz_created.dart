@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mcq_ai/models/quiz.dart';
 import 'package:mcq_ai/utils/constant_manager.dart';
 import 'package:mcq_ai/utils/size_config.dart';
-import 'package:mcq_ai/views/dashboard_screen.dart';
 import 'package:mcq_ai/widgets/my_elevated_button.dart';
 
+import 'dashboard_screen.dart';
+
 class QuizCreatedScreen extends StatelessWidget {
-  const QuizCreatedScreen({Key? key}) : super(key: key);
+  final Quiz quiz;
+
+  const QuizCreatedScreen({Key? key, required this.quiz}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     SizeConfig().init(context);
     return Scaffold(
       appBar: ConstantManager.appBar('Quiz Created'),
@@ -30,7 +35,9 @@ class QuizCreatedScreen extends StatelessWidget {
             SizedBox(height: SizeConfig.blockSizeVertical! * 4.0),
             MyElevatedButton(
               text: 'Generate PDF',
-              onClick: () {},
+              onClick: () {
+                print(quiz);
+              },
             ),
             SizedBox(height: SizeConfig.blockSizeVertical!),
             MyElevatedButton(

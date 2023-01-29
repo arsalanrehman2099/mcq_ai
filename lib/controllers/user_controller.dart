@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:get/get.dart';
 import 'package:mcq_ai/utils/constant_manager.dart';
-import 'package:mcq_ai/views/login_screen.dart';
 
 import '../models/user.dart';
+import '../views/auth/login_screen.dart';
 
 class UserController extends GetxController {
   static const COLLECTION_NAME = 'Users';
@@ -13,6 +13,8 @@ class UserController extends GetxController {
   final _firestore = FirebaseFirestore.instance;
 
   var loading = false.obs;
+
+  String myId() => _auth.currentUser!.uid.toString();
 
   bool isLoggedIn() {
     return _auth.currentUser == null ? false : true;

@@ -1,31 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mcq_ai/utils/raw_data.dart';
 import 'package:mcq_ai/utils/size_config.dart';
-import 'package:mcq_ai/views/new_quiz_question.dart';
+import 'package:mcq_ai/views/dashboard/new_quiz_questions.dart';
 import 'package:mcq_ai/widgets/my_elevated_button.dart';
 import 'package:mcq_ai/widgets/my_text_field.dart';
 
-import '../utils/constant_manager.dart';
-import '../widgets/app_logo.dart';
+import '../../utils/constant_manager.dart';
+import '../../widgets/app_logo.dart';
 
-class NewQuizScreen extends StatefulWidget {
-  NewQuizScreen({Key? key}) : super(key: key);
+class EditQuizScreen extends StatefulWidget {
+
+  final int index;
+  EditQuizScreen({Key? key, required this.index}) : super(key: key);
 
   @override
-  State<NewQuizScreen> createState() => _NewQuizScreenState();
+  State<EditQuizScreen> createState() => _EditQuizScreenState();
 }
 
-class _NewQuizScreenState extends State<NewQuizScreen> {
+class _EditQuizScreenState extends State<EditQuizScreen> {
   final _title = TextEditingController();
   final _subtitle = TextEditingController();
   final _date = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _title.text = RawData.DATA[widget.index]['title'].toString();
+    _subtitle.text = RawData.DATA[widget.index]['subtitle'].toString();
+    _date.text = RawData.DATA[widget.index]['date'].toString();
+  }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
 
     return Scaffold(
-      appBar: ConstantManager.appBar('New Quiz'),
+      appBar: ConstantManager.appBar('Edit Quiz'),
       body: _quizForm(),
     );
   }
@@ -63,24 +76,6 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
             GestureDetector(
               onTap: () {
                 showDatePicker(
-                  builder: (context, child) {
-                    return Theme(
-                      data: Theme.of(context).copyWith(
-                        colorScheme: const ColorScheme.light(
-                          primary: ConstantManager.PRIMARY_COLOR, // header background color
-                        ),
-                        textButtonTheme: TextButtonThemeData(
-                          style: TextButton.styleFrom(
-                            textStyle: ConstantManager.ktextStyle.copyWith(
-                              color:  ConstantManager.PRIMARY_COLOR,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      child: child!,
-                    );
-                  },
                   context: context,
                   initialDate: DateTime.now(),
                   firstDate: DateTime.now(),
@@ -102,7 +97,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
             SizedBox(height: SizeConfig.blockSizeVertical! * 3.0),
             MyElevatedButton(
               text: 'Next',
-              onClick: () => Get.to(() => NewQuizQuestion()),
+              onClick: () {},
             ),
           ],
         ),
