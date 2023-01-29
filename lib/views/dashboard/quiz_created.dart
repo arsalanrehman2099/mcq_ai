@@ -5,12 +5,32 @@ import 'package:mcq_ai/utils/constant_manager.dart';
 import 'package:mcq_ai/utils/size_config.dart';
 import 'package:mcq_ai/widgets/my_elevated_button.dart';
 
+import '../../services/pdf_api.dart';
 import 'dashboard_screen.dart';
 
 class QuizCreatedScreen extends StatelessWidget {
   final Quiz quiz;
 
   const QuizCreatedScreen({Key? key, required this.quiz}) : super(key: key);
+
+  _generatePdf() async {
+    String pdf = "";
+
+    quiz.questions?.forEach((key, value) {
+      pdf += "$key: ${value['Q']}";
+      pdf += "\n\n";
+      pdf += "A: ${value["A"]}\n";
+      pdf += "B: ${value["B"]}\n";
+      pdf += "C: ${value["C"]}\n";
+      pdf += "D: ${value["D"]}\n";
+      pdf += "\n\n\n";
+    });
+
+    final pdfFile =
+    await PdfApi.generatePdf(header: quiz.title, pdfContent: pdf);
+
+    PdfApi.openFile(pdfFile);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +55,7 @@ class QuizCreatedScreen extends StatelessWidget {
             SizedBox(height: SizeConfig.blockSizeVertical! * 4.0),
             MyElevatedButton(
               text: 'Generate PDF',
-              onClick: () {
-                print(quiz);
-              },
+              onClick: _generatePdf,
             ),
             SizedBox(height: SizeConfig.blockSizeVertical!),
             MyElevatedButton(

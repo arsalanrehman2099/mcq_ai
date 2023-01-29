@@ -39,35 +39,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: _appBar(context),
       floatingActionButton: _fab(),
       body: Obx(
-        () => LoadingOverlay(
-          color: ConstantManager.PRIMARY_COLOR,
-          progressIndicator: OverlayLoader(),
-          isLoading: _quizController.fetchingQuiz.value,
-          child: _quizController.quizes.value.isEmpty
-              ? _noQuizFound()
-              : ListView.separated(
-                  itemCount: _quizController.quizes.value.length,
-                  separatorBuilder: (c, _) => const Divider(),
-                  itemBuilder: (ctx, i) {
-                    Quiz quiz = _quizController.quizes.value[i];
-                    return ListTile(
-                      onTap: () => Get.to(() => QuizActionScreen(quiz: quiz)),
-                      title: Text(
-                        quiz.title ?? "",
-                        style: ConstantManager.ktextStyle,
-                      ),
-                      subtitle: Text(
-                        quiz.subtitle ?? "",
-                        style: ConstantManager.ktextStyle,
-                      ),
-                      trailing: Text(
-                        quiz.date ?? "",
-                        style: ConstantManager.ktextStyle,
-                      ),
-                    );
-                  },
-                ),
-        ),
+        () => _quizController.fetchingQuiz.value
+            ? Center(child: OverlayLoader())
+            : _quizController.quizes.value.isEmpty
+                ? _noQuizFound()
+                : ListView.separated(
+                    itemCount: _quizController.quizes.value.length,
+                    separatorBuilder: (c, _) => const Divider(),
+                    itemBuilder: (ctx, i) {
+                      Quiz quiz = _quizController.quizes.value[i];
+                      return ListTile(
+                        onTap: () => Get.to(() => QuizActionScreen(quiz: quiz)),
+                        title: Text(
+                          quiz.title ?? "",
+                          style: ConstantManager.ktextStyle,
+                        ),
+                        subtitle: Text(
+                          quiz.subtitle ?? "",
+                          style: ConstantManager.ktextStyle,
+                        ),
+                        trailing: Text(
+                          quiz.date ?? "",
+                          style: ConstantManager.ktextStyle,
+                        ),
+                      );
+                    },
+                  ),
       ),
     );
   }
@@ -77,15 +74,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.question_mark,size: SizeConfig.safeBlockHorizontal! * 9.0,),
-          SizedBox(height: SizeConfig.safeBlockVertical! ),
+          Icon(
+            Icons.question_mark,
+            size: SizeConfig.safeBlockHorizontal! * 9.0,
+          ),
+          SizedBox(height: SizeConfig.safeBlockVertical!),
           Text(
             'No Quiz Found',
             style: ConstantManager.kheadStyle.copyWith(
-              fontSize: SizeConfig.safeBlockHorizontal! * 4.5,
-              fontWeight: FontWeight.w300,
-              letterSpacing: 1.2
-            ),
+                fontSize: SizeConfig.safeBlockHorizontal! * 4.5,
+                fontWeight: FontWeight.w300,
+                letterSpacing: 1.2),
           ),
         ],
       ),

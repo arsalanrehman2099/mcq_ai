@@ -57,23 +57,26 @@ class ViewQuizScreen extends StatelessWidget {
         primary: false,
         shrinkWrap: true,
         itemCount: quiz.questions!.length,
-        separatorBuilder: (ctx, _) => Divider(),
+        separatorBuilder: (ctx, _) => const Divider(),
         itemBuilder: (ctx, i) {
           String key = quiz.questions!.keys.elementAt(i);
           Map ques = quiz.questions![key];
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _text("Q$key:", "${ques['Q']}"),
-              SizedBox(height: SizeConfig.safeBlockVertical!),
-              _text("A:", "${ques['A']}"),
-              _text("B:", "${ques['B']}"),
-              _text("C:", "${ques['C']}"),
-              _text("D:", "${ques['D']}"),
-              SizedBox(height: SizeConfig.safeBlockVertical!),
-              _text("Correct:", "${ques['Correct']}"),
-            ],
+          return Container(
+            margin: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical!),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _text("$key:", "${ques['Q']}"),
+                SizedBox(height: SizeConfig.safeBlockVertical!),
+                _text("A:", "${ques['A']}"),
+                _text("B:", "${ques['B']}"),
+                _text("C:", "${ques['C']}"),
+                _text("D:", "${ques['D']}"),
+                SizedBox(height: SizeConfig.safeBlockVertical!),
+                _text("Correct:", "${ques['Correct']}"),
+              ],
+            ),
           );
         });
   }

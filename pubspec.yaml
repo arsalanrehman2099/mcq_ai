@@ -22,6 +22,10 @@ dependencies:
   firebase_auth:
   cloud_firestore:
   loading_overlay:
+  pdf:
+  open_filex:
+  path_provider:
+  printing:
 
 
 dev_dependencies:

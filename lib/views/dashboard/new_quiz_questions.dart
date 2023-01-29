@@ -24,7 +24,7 @@ class NewQuizQuestion extends StatefulWidget {
 
 class _NewQuizQuestionState extends State<NewQuizQuestion> {
   int counter = 1;
-  int max = 5;
+  int max = 10;
 
   final QuizController _quizController = Get.find();
 

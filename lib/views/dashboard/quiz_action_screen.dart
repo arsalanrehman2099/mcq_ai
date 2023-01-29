@@ -11,6 +11,7 @@ import 'package:mcq_ai/utils/size_config.dart';
 import 'package:mcq_ai/views/dashboard/edit_quiz.dart';
 import 'package:mcq_ai/views/dashboard/view_quiz.dart';
 
+import '../../services/pdf_api.dart';
 import '../../widgets/overlay_loader.dart';
 import 'camera_page.dart';
 import 'dashboard_screen.dart';
@@ -31,6 +32,25 @@ class QuizActionScreen extends StatelessWidget {
     } else {
       Get.back();
     }
+  }
+
+  _generatePdf() async {
+    String pdf = "";
+
+    quiz.questions?.forEach((key, value) {
+      pdf += "$key: ${value['Q']}";
+      pdf += "\n\n";
+      pdf += "A: ${value["A"]}\n";
+      pdf += "B: ${value["B"]}\n";
+      pdf += "C: ${value["C"]}\n";
+      pdf += "D: ${value["D"]}\n";
+      pdf += "\n\n\n";
+    });
+
+    final pdfFile =
+        await PdfApi.generatePdf(header: quiz.title, pdfContent: pdf);
+
+    PdfApi.openFile(pdfFile);
   }
 
   @override
@@ -79,7 +99,7 @@ class QuizActionScreen extends StatelessWidget {
                 ),
                 _button(
                   text: 'Generate PDF',
-                  onClick: () {},
+                  onClick: _generatePdf,
                 ),
                 _button(
                   text: 'View Quiz',
