@@ -36,7 +36,7 @@ class _PreviewResultScreenState extends State<PreviewResultScreen> {
         child: Column(
           children: [
             _stats(),
-            Image.asset('assets/results.jpg'),
+            Image.network(widget.apiResponse['marked-image']),
           ],
         ),
       ),
