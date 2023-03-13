@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,12 +5,10 @@ import 'package:mcq_ai/controllers/quiz_controller.dart';
 import 'package:mcq_ai/controllers/user_controller.dart';
 import 'package:mcq_ai/views/auth/splash_screen.dart';
 
-late List<CameraDescription> _cameras;
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  _cameras = await availableCameras();
   runApp(MyApp());
 }
 

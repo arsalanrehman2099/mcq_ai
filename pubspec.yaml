@@ -17,7 +17,6 @@ dependencies:
   google_fonts: ^3.0.1
   get: ^4.6.5
   fluttertoast: ^8.1.1
-  camera: ^0.10.0+4
   firebase_core:
   firebase_auth:
   cloud_firestore:
@@ -26,6 +25,8 @@ dependencies:
   open_filex:
   path_provider:
   printing:
+  image_picker:
+  dio:
 
 
 dev_dependencies:
